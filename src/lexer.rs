@@ -11,7 +11,7 @@ pub fn tokenize(input: &str) -> Result<Vec<Token>, Error> {
             c if c.is_digit(10) => {
                 let mut n = 0;
                 while i < input_chars.len() && input_chars[i].is_digit(10) {
-                    n = n*10 + input_chars[i].to_digit(10).unwrap();
+                    n = n*10 + input_chars[i].to_digit(10).unwrap() as i32;
                     i += 1;
                 }
                 if i < input_chars.len() {

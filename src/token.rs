@@ -1,16 +1,28 @@
 #[derive(Debug)]
 pub enum Token {
-    Number(u32),
+    Number(i32),
     Op(Operator),
     LParen,
     RParen,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub enum Operator {
     Add,
     Sub,
     Mul,
     Div,
     Mod,
+}
+
+impl Operator {
+    pub fn precedence(&self) -> i32 {
+        match self {
+            Operator::Add => 2,
+            Operator::Sub => 2,
+            Operator::Mul => 3,
+            Operator::Div => 3,
+            Operator::Mod => 3,
+        }
+    }
 }
