@@ -1,4 +1,5 @@
 use std::fmt;
+use crate::token::Token;
 
 #[derive(Debug)]
 pub struct Error {
@@ -17,8 +18,11 @@ impl Error {
 
 impl fmt::Display for Error {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        match self.kind {
+        match &self.kind {
             ErrorKind::InvalidCharacter(c) => write!(f, "Found an invalid character: '{}'", c),
+            ErrorKind::UnexpectedToken(t1, t2) => write!(f, "Unexpected token '{:?}' near token '{:?}", t2, t1),
+            ErrorKind::MissingOperand => write!(f, "Missing operand"),
+            ErrorKind::MissingExpression => write!(f, "Missing expresion"),
         }
     }
 }
@@ -26,5 +30,7 @@ impl fmt::Display for Error {
 #[derive(Debug)]
 pub enum ErrorKind {
     InvalidCharacter(char),
+    UnexpectedToken(Token, Token),
+    MissingOperand,
+    MissingExpression,
 }
-

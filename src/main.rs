@@ -2,7 +2,9 @@ use std::env;
 
 mod token;
 mod error;
+mod expr;
 mod lexer;
+mod parser;
 
 fn main() {
     let args = env::args().collect::<Vec<String>>()[1..].join(" ");
@@ -13,5 +15,11 @@ fn main() {
         return;
     }
 
-    println!("{:?}", tokens);
+    let expr = parser::parse(tokens.unwrap());
+    if let Err(e) = expr {
+        println!("{}", e);
+        return;
+    }
+
+    println!("{}", expr.unwrap().evaluate());
 }
