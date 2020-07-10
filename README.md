@@ -4,6 +4,8 @@
 
 > Evaluates arithmetic expressions
 
+Using the [Shunting yard algorithm](https://en.wikipedia.org/wiki/Shunting-yard_algorithm) it produces an expression tree which is then evaluated by depth-first searching it.
+
 ## Table of Contents
 - [Requirements](##requirements)
 - [Install](##install)
@@ -23,7 +25,7 @@ cargo build --release
 
 ## Usage
 ```
-./arith-eval 12 * (5 - 2) % 4 + 8
+./arith-eval "12 * (5 - 2) % 4 + 8"
 ```
 
 ## Grammar
