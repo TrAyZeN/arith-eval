@@ -1,6 +1,6 @@
-use crate::token::{Token, Operator};
 use crate::error::{Error, ErrorKind};
-use crate::expr::{Expr, BinOp};
+use crate::expr::{BinOp, Expr};
+use crate::token::{Operator, Token};
 
 struct ExpressionStack {
     stack: Vec<Expr>,
@@ -30,11 +30,7 @@ impl ExpressionStack {
             None => return Err(Error::new(ErrorKind::MissingOperand, 0)),
         };
 
-        self.push(Expr::Operation(BinOp::new(
-            operator,
-            left,
-            right
-        )));
+        self.push(Expr::Operation(BinOp::new(operator, left, right)));
 
         Ok(())
     }
@@ -57,23 +53,25 @@ pub fn parse(tokens: Vec<Token>) -> Result<Expr, Error> {
                             }
 
                             expression_stack.push_operation(prev_op)?;
-                        },
+                        }
                         op => {
                             operator_stack.push(op);
                             break;
-                        },
+                        }
                     }
                 }
 
                 operator_stack.push(Token::Op(op));
-            },
+            }
             Token::LParen => operator_stack.push(Token::LParen),
             Token::RParen => {
                 while !operator_stack.is_empty() {
                     match operator_stack.pop().unwrap() {
                         Token::Op(op) => expression_stack.push_operation(op.clone())?,
                         Token::LParen => continue 'outer,
-                        t => return Err(Error::new(ErrorKind::UnexpectedToken(Token::RParen, t), 0)),
+                        t => {
+                            return Err(Error::new(ErrorKind::UnexpectedToken(Token::RParen, t), 0))
+                        }
                     }
                 }
 

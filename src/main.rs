@@ -1,10 +1,10 @@
 use std::env;
 
-mod token;
 mod error;
 mod expr;
 mod lexer;
 mod parser;
+mod token;
 
 fn main() {
     let args = env::args().collect::<Vec<String>>()[1..].join(" ");

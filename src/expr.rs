@@ -10,15 +10,13 @@ impl Expr {
     pub fn evaluate(&self) -> i32 {
         match self {
             Expr::Number(n) => *n,
-            Expr::Operation(o) => {
-                match o.op {
-                    Operator::Add => o.left.evaluate() + o.right.evaluate(),
-                    Operator::Sub => o.left.evaluate() - o.right.evaluate(),
-                    Operator::Mul => o.left.evaluate() * o.right.evaluate(),
-                    Operator::Div => o.left.evaluate() / o.right.evaluate(),
-                    Operator::Mod => o.left.evaluate() % o.right.evaluate(),
-                }
-            }
+            Expr::Operation(o) => match o.op {
+                Operator::Add => o.left.evaluate() + o.right.evaluate(),
+                Operator::Sub => o.left.evaluate() - o.right.evaluate(),
+                Operator::Mul => o.left.evaluate() * o.right.evaluate(),
+                Operator::Div => o.left.evaluate() / o.right.evaluate(),
+                Operator::Mod => o.left.evaluate() % o.right.evaluate(),
+            },
         }
     }
 }
